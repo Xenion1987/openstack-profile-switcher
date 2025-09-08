@@ -1,12 +1,5 @@
 {
   "name": "OpenStack Profile Switcher",
-  "applications": {
-    "gecko": {
-      "data_collection_permissions": [],
-      "id": "openstack-profile-switcher@access-intech.de"
-    }
-  },
-  "author": "Xenion1987",
   "description": "Switch comfortably between OpenStack Projects.",
   "version": "1.0.0",
   "manifest_version": 3,
@@ -17,5 +10,14 @@
   "options_page": "options/options.html",
   "permissions": ["storage", "tabs"],
   "host_permissions": [],
-  "optional_host_permissions": ["https://*/"]
+  "optional_host_permissions": ["https://*/"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "openstack-profile-switcher@access-intech.de",
+      "strict_min_version": "128.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
 }
