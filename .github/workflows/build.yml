@@ -45,12 +45,10 @@ jobs:
 
       - name: Prepare Firefox extension xpi
         run: |
-          mkdir -p dist
-          cd dist
-          cp ../manifest.json .
-          cp -r ../popup ../images ../options .
-          zip -r openstack-profile-switcher-firefox-${VERSION}.xpi manifest.json popup images options
-          cd ..
+          cd .  # root of repository
+          zip -r -FS dist/openstack-profile-switcher-firefox-${VERSION}.xpi \
+            manifest.json popup images options \
+            --exclude '*.git*' --exclude '*.DS_Store*'
 
       - name: Upload artifacts for debugging
         uses: actions/upload-artifact@v4
