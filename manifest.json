@@ -1,5 +1,11 @@
 {
   "name": "OpenStack Profile Switcher",
+  "applications": {
+    "gecko": {
+      "data_collection_permissions": [],
+      "id": "openstack-profile-switcher@access-intech.de"
+    }
+  },
   "author": "Xenion1987",
   "description": "Switch comfortably between OpenStack Projects.",
   "version": "1.0.0",
