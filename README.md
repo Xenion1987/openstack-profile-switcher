@@ -56,8 +56,8 @@ The extension does not hardcode domains. Instead, you can add new OpenStack inst
 - You must edit the extension’s `manifest.json` before loading it, and add the required domains under `optional_host_permissions`. Example:
   ```json
   "optional_host_permissions": [
-    "https://openstack.domain-a.tld//*",
-    "https://openstack.domain-b.tld//*"
+    "https://openstack.domain-a.tld/*",
+    "https://openstack.domain-b.tld/*"
   ]
   ```
 - After editing, reload the extension.
