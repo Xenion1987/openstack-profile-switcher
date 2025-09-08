@@ -38,15 +38,15 @@ jobs:
         run: |
           mkdir -p dist
           zip -r dist/openstack-profile-switcher-chrome-${VERSION}.zip \
-            manifest.json popup/ scripts/ images/ options/
+            manifest.json popup/ images/ options/
 
       - name: Prepare Firefox extension xpi
         run: |
           mkdir -p dist
           cd dist
           cp ../manifest.json .
-          cp -r ../popup ../scripts ../images ../options .
-          zip -r openstack-profile-switcher-firefox-${VERSION}.xpi manifest.json popup scripts images options
+          cp -r ../popup ../images ../options .
+          zip -r openstack-profile-switcher-firefox-${VERSION}.xpi manifest.json popup images options
           cd ..
 
       - name: Upload artifacts for debugging
