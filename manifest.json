@@ -1,0 +1,15 @@
+{
+  "name": "OpenStack Profile Switcher",
+  "author": "Xenion1987",
+  "description": "Switch comfortably between OpenStack Projects.",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/ops_logo_128x128.png"
+  },
+  "options_page": "options/options.html",
+  "permissions": ["storage", "tabs"],
+  "host_permissions": [],
+  "optional_host_permissions": ["https://*/"]
+}
