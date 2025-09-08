@@ -10,7 +10,7 @@ Supports multiple Horizon instances by allowing the user to add domains dynamica
 - 🔀 Switch between OpenStack projects directly from the extension popup
 - 🌙 Light/Dark mode toggle
 - 🔍 Search projects by name or description
-- 📦 Domain support for multiple OpenStack instances (os3, os5, …)
+- 📦 Domain support for multiple OpenStack instances
 
 ---
 
@@ -47,7 +47,7 @@ The extension does not hardcode domains. Instead, you can add new OpenStack inst
 ### Chrome / Chromium
 
 - Open the extension **Options** page.
-- Enter a domain (e.g. `https://dashboard.os5.openstack.group.one/`) and click **Add**.
+- Enter a domain (e.g. `https://openstack.domain.tld/`) and click **Add**.
 - Chrome will show a permission dialog – confirm it to allow the extension access to that domain.
 
 ### Firefox
@@ -56,8 +56,8 @@ The extension does not hardcode domains. Instead, you can add new OpenStack inst
 - You must edit the extension’s `manifest.json` before loading it, and add the required domains under `optional_host_permissions`. Example:
   ```json
   "optional_host_permissions": [
-    "https://dashboard.os3.openstack.group.one/*",
-    "https://dashboard.os5.openstack.group.one/*"
+    "https://openstack.domain-a.tld//*",
+    "https://openstack.domain-b.tld//*"
   ]
   ```
 - After editing, reload the extension.
