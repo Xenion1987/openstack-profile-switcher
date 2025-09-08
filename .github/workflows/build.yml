@@ -1,0 +1,74 @@
+name: Build and Release OpenStack Profile Switcher
+
+on:
+  push:
+    branches: [main]
+  release:
+    types: [created]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install dependencies (if needed)
+        run: |
+          npm install || true
+
+      - name: Set version from tag
+        id: version
+        run: |
+          if [ -n "${GITHUB_REF_NAME}" ]; then
+            VERSION=${GITHUB_REF_NAME#v}  # remove 'v' prefix
+          else
+            VERSION="dev"
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          echo "Using version: $VERSION"
+
+      - name: Prepare Chrome extension zip
+        run: |
+          mkdir -p dist
+          zip -r dist/openstack-profile-switcher-chrome-${VERSION}.zip \
+            manifest.json popup/ scripts/ images/ options/
+
+      - name: Prepare Firefox extension xpi
+        run: |
+          mkdir -p dist
+          cd dist
+          cp ../manifest.json .
+          cp -r ../popup ../scripts ../images ../options .
+          zip -r openstack-profile-switcher-firefox-${VERSION}.xpi manifest.json popup scripts images options
+          cd ..
+
+      - name: Upload artifacts for debugging
+        uses: actions/upload-artifact@v3
+        with:
+          name: OpenStack-Profile-Switcher-Extensions
+          path: dist/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: OpenStack-Profile-Switcher-Extensions
+          path: dist
+
+      - name: Upload release assets
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
