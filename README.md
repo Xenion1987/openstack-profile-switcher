@@ -1,4 +1,4 @@
-# OpenStack Profile Switcher
+# OpenStack Project Switcher
 
 A lightweight browser extension that lets you quickly switch between projects in the OpenStack Horizon dashboard.  
 Supports multiple Horizon instances by allowing the user to add domains dynamically.

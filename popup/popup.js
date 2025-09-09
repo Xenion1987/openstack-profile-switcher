@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         chrome.tabs.update(tab.id, { url: switchUrl });
       }
     } catch (e) {
-      console.error("[openstack-profile-switcher] Could not build switch URL:", e);
+      console.error("[openstack-project-switcher] Could not build switch URL:", e);
     }
   };
 
@@ -166,7 +166,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     ) {
       try {
         allProjects = JSON.parse(cache);
-        console.log("[openstack-profile-switcher] Using cached projects.");
+        console.log("[openstack-project-switcher] Using cached projects.");
         renderProjects(searchInput.value);
         return;
       } catch {
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       allProjects = await fetchProjects();
-      console.log("[openstack-profile-switcher] Project list updated.");
+      console.log("[openstack-project-switcher] Project list updated.");
     } catch (err) {
       console.error(err);
       listContainer.textContent = "Error loading projects.";
