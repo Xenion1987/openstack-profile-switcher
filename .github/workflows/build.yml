@@ -1,4 +1,4 @@
-name: Build and Release OpenStack Profile Switcher
+name: Build and Release OpenStack Project Switcher
 
 on:
   push:
@@ -37,24 +37,37 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
           echo "Using version: $VERSION"
 
+      - name: Set manifest's version to $VERSION
+        run: |
+          if [[ ${VERSION} =~ [1-9][0-9]*\.[0-9]+\.[0-9]+ ]]; then
+            sed -r -i "s/\"version\": \"[1-9][0-9]*\.[0-9]+\.[0-9]+\"/\"version\": \"${VERSION}\"/" manifest.json
+          fi
+
       - name: Prepare Chrome extension zip
         run: |
-          mkdir -p dist
-          zip -r dist/openstack-profile-switcher-chrome-${VERSION}.zip \
+          mkdir -p upload
+          zip -r upload/openstack-project-switcher-chrome-${VERSION}.zip \
             manifest.json popup/ images/ options/
 
-      - name: Prepare Firefox extension xpi
+      - name: Install web-ext
+        run: npm install --global web-ext
+
+      - name: Sign Firefox Add-on
+        env:
+          WEBEXT_API_KEY: ${{ secrets.AMO_JWT_ISSUER }}
+          WEBEXT_API_SECRET: ${{ secrets.AMO_JWT_SECRET }}
         run: |
-          cd .  # root of repository
-          zip -r -FS dist/openstack-profile-switcher-firefox-${VERSION}.xpi \
-            manifest.json popup images options \
-            --exclude '*.git*' --exclude '*.DS_Store*'
+          web-ext sign --source-dir=./ \
+            --channel=unlisted \
+            --artifacts-dir=upload \
+            --api-key=${WEBEXT_API_KEY} \
+            --api-secret=${WEBEXT_API_SECRET}
 
       - name: Upload artifacts for debugging
         uses: actions/upload-artifact@v4
         with:
-          name: OpenStack-Profile-Switcher-Extensions
-          path: dist/
+          name: OpenStack-Project-Switcher-Extensions
+          path: upload/
 
   release:
     needs: build
@@ -64,12 +77,12 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: OpenStack-Profile-Switcher-Extensions
+          name: OpenStack-Project-Switcher-Extensions
           path: dist
 
       - name: Upload release assets
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/*
+          files: upload/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

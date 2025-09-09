@@ -1,23 +1,35 @@
 {
-  "name": "OpenStack Profile Switcher",
-  "description": "Switch comfortably between OpenStack Projects.",
-  "version": "1.0.0",
-  "manifest_version": 3,
   "action": {
-    "default_popup": "popup/popup.html",
-    "default_icon": "images/ops_logo_128x128.png"
+    "default_icon": "images/ops_logo_128x128.png",
+    "default_popup": "popup/popup.html"
   },
-  "options_page": "options/options.html",
-  "permissions": ["storage", "tabs"],
-  "host_permissions": [],
-  "optional_host_permissions": ["https://*/"],
   "browser_specific_settings": {
     "gecko": {
-      "id": "openstack-profile-switcher@access-intech.de",
-      "strict_min_version": "128.0",
       "data_collection_permissions": {
-        "required": ["none"]
-      }
+        "required": [
+          "none"
+        ]
+      },
+      "id": "openstack-project-switcher@access-intech.de",
+      "strict_min_version": "128.0"
     }
-  }
+  },
+  "description": "Switch comfortably between OpenStack Projects.",
+  "homepage_url": "https://github.com/Xenion1987/openstack-project-switcher",
+  "host_permissions": [],
+  "icons": {
+    "48": "images/ops_logo_128x128.png",
+    "128": "images/ops_logo_128x128.png"
+  },
+  "manifest_version": 3,
+  "name": "OpenStack Project Switcher",
+  "optional_host_permissions": [
+    "https://*/"
+  ],
+  "options_page": "options/options.html",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "version": "1.0.1"
 }
